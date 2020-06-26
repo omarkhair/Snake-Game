@@ -11,7 +11,10 @@ public class FoodTile extends Tile {
 	
 	@Override
 	public void render(Graphics g, int x, int y) {
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(x, y, TILEWIDTH, TILEHEIGHT);
 		g.setColor(color);
-		g.drawOval(x, y, TILEWIDTH, TILEHEIGHT);
+		g.fillOval(x, y, TILEWIDTH, TILEHEIGHT);
+//		g.drawString("HI", x, y);
 	}
 }

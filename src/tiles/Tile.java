@@ -11,7 +11,7 @@ abstract public class Tile {
 	public static Tile FoodTile = new FoodTile(1);
 	public static Tile SnakeBodyTile = new SnakeBodyTile(2);
 	public static Tile SnakeHeadTile = new SnakeHeadTile(3);
-	public static int TILEWIDTH, TILEHEIGHT;
+	public static int TILEWIDTH = 19 , TILEHEIGHT = 19;
 
 	// Class
 	protected Color color;
@@ -20,6 +20,7 @@ abstract public class Tile {
 	public Tile(Color color, int id) {
 		this.color = color;
 		this.id = id;
+		tiles[id]=this;
 	}
 
 	public void tick() {
@@ -28,6 +29,6 @@ abstract public class Tile {
 
 	public void render(Graphics g, int x, int y) {
 		g.setColor(color);
-		g.drawRect(x, y, TILEWIDTH, TILEHEIGHT);
+		g.fillRect(x, y, TILEWIDTH, TILEHEIGHT);
 	}
 }

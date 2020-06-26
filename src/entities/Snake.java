@@ -10,7 +10,7 @@ public class Snake {
 		this.xDirection=xDirection;
 		this.yDirection=yDirection;
 		for(int i=0;i<3;i++)
-			cells.add(new Cell(startCell.x-i, startCell.y-i));
+			cells.add(new Cell(startCell.x-i, startCell.y));
 	}
 	
 	public void tick(boolean eat) {

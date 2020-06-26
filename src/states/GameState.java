@@ -8,7 +8,7 @@ import entities.Snake;
 import tiles.Tile;
 
 public class GameState extends State {
-	public static final int ROWS=100, COLUMNS=100;
+	public static final int ROWS=30, COLUMNS=30;
 	private int[][] grid;	// Carries the ids of the cells: Ground -> 0 , Food-> 1, SnakeBody ->2 , SnakeHead -> 3
 	private Snake snake;
 	private Cell food;
@@ -24,7 +24,6 @@ public class GameState extends State {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		detectDirection();		// detect input from user and perform changes
 		if(snake.getHead().equals(food)) {
 			snake.tick(true);
@@ -38,8 +37,15 @@ public class GameState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 		
+		for(int y=0;y<ROWS;y++)
+			for(int x=0;x<COLUMNS;x++)
+				getTile(x,y).render(g, x*Tile.TILEWIDTH, y*Tile.TILEHEIGHT); 	// gives the location in pexels
+		
+	}
+	
+	private Tile getTile(int x, int y) {
+		return Tile.tiles[grid[x][y]];
 	}
 	
 	private void detectDirection() {
@@ -61,6 +67,7 @@ public class GameState extends State {
 		}
 		
 	}
+	
 	// this method puts the values inside the grid based on snake and food cells
 	public void rebuildGrid() {	
 		for(int i=0;i<ROWS;i++)
@@ -73,6 +80,7 @@ public class GameState extends State {
 			grid[c.x][c.y]=2;
 		grid[snake.getHead().x][snake.getHead().y]=3;
 	}
+	
 	public Cell generateFood() {
 		Cell food;
 		do {
@@ -82,6 +90,7 @@ public class GameState extends State {
 		
 		return food;
 	}
+	
 	public int generateRandom() {	
 		return (int) (Math.random()*ROWS);
 	}

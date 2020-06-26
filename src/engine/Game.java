@@ -5,19 +5,21 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import input.KeyboardManager;
+import states.GameState;
+import states.State;
 import view.Display;
 
 public class Game implements Runnable { // Runnable allows this class to be run on a thread
 	private int width, height;
 	private String title;
 	private Display display;
-	private int x, y;
-	private int xMove, yMove;
 	private boolean running;
 	private Thread thread;
 
 	private BufferStrategy bs;
 	private Graphics g;
+	
+	private State gameState;
 
 	// input
 	private KeyboardManager keyBoard;
@@ -29,8 +31,6 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		x = width / 2;
-		y = width / 2;
 		start();
 	}
 
@@ -38,6 +38,8 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 		display = new Display(title, width, height);
 		keyBoard = new KeyboardManager();
 		display.addKeyListener(keyBoard);
+		gameState=new GameState(this);
+		State.setState(gameState);
 
 	}
 
@@ -45,7 +47,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	public void run() {
 		init();
 
-		int fps = 20; // screen is updated 10 times per second
+		int fps = 15; // screen is updated 10 times per second
 		double timePerTick = (int) 1e9 / fps; // time in nanoseconds
 		double delta = 0;
 		long now, lastTime = System.nanoTime();
@@ -63,32 +65,10 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	}
 
 	private void tick() {
-		// TODO Auto-generated method stub
-//		x+=step;
 		keyBoard.tick();
-//		xMove=yMove=0;
-		if (keyBoard.isUp()) {
-			yMove -= step;
-//			xMove = 0;
-		}
-		if (keyBoard.isDown()) {
-			yMove += step;
-//			xMove = 0;
-		}
-		if (keyBoard.isLeft()) {
-			xMove -= step;
-//			yMove = 0;
-		}
-		if (keyBoard.isRight()) {
-			xMove += step;
-//			yMove = 0;
-		}
-		xMove=Math.min(xMove, 4*step);
-		xMove=Math.max(xMove, -4*step);
-		yMove=Math.min(yMove, 4*step);
-		yMove=Math.max(yMove, -4*step);
-		x += xMove;
-		y += yMove;
+		
+		if(State.getState() != null)
+			State.getState().tick();
 	}
 
 	private void render() {
@@ -99,17 +79,14 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 			return;
 		}
 		g = bs.getDrawGraphics();
-		// Clear Screen
+		//Clear Screen
 		g.clearRect(0, 0, width, height);
-		// start drawing
-
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(x, y, 32, 32);
-
-		g.setColor(Color.green);
-//		g.fillRect(y, x, 20, 20);
-
-		// end drawing
+		//Draw Here!
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, width, height);
+		State.getState().render(g);
+		
+		//End Drawing!
 		bs.show();
 		g.dispose();
 	}
@@ -133,6 +110,20 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	
+	public KeyboardManager getKeyBoard() {
+		return keyBoard;
+	}
+	
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	public static void main(String[] args) {
