@@ -11,11 +11,11 @@ abstract public class Tile {
 	public static Tile FoodTile = new FoodTile(1);
 	public static Tile SnakeBodyTile = new SnakeBodyTile(2);
 	public static Tile SnakeHeadTile = new SnakeHeadTile(3);
-	
+	public static int TILEWIDTH, TILEHEIGHT;
+
 	// Class
 	protected Color color;
 	protected final int id;
-	public static int TILEWIDTH, TILEHEIGHT;
 
 	public Tile(Color color, int id) {
 		this.color = color;

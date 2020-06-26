@@ -13,10 +13,11 @@ public class Snake {
 			cells.add(new Cell(startCell.x-i, startCell.y-i));
 	}
 	
-	public void tick() {
+	public void tick(boolean eat) {
 		Cell newHead= new Cell(cells.get(0).x+xDirection, cells.get(0).y+yDirection);
-		cells.removeLast();
 		cells.addFirst(newHead);
+		if(!eat)
+			cells.removeLast();
 	}
 	
 	
@@ -27,7 +28,19 @@ public class Snake {
 	public void setyDirection(int yDirection) {
 		this.yDirection = yDirection;
 	}
+	
+	public int getxDirection() {
+		return xDirection;
+	}
+
+	public int getyDirection() {
+		return yDirection;
+	}
+
 	public LinkedList<Cell> getCells(){
 		return cells;
+	}
+	public Cell getHead() {
+		return cells.get(0);
 	}
 }

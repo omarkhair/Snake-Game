@@ -7,6 +7,8 @@ public class Cell {
 		this.x=x;
 		this.y=y;
 	}
-	
+	public boolean equals(Cell o) {
+		return x==o.x && y==o.y;
+	}
 
 }
