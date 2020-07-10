@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class FoodTile extends Tile {
 
 	public FoodTile(int id) {
-		super(Color.ORANGE, id);
+		super(Color.ORANGE, Color.ORANGE, id);
 	}
 	
 	@Override

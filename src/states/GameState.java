@@ -8,15 +8,16 @@ import entities.Snake;
 import tiles.Tile;
 
 public class GameState extends State {
-	public static final int ROWS=30, COLUMNS=30;
+	public static final int ROWS=20, COLUMNS=20;
+	private int startX = 0,startY=60;
 	private int[][] grid;	// Carries the ids of the cells: Ground -> 0 , Food-> 1, SnakeBody ->2 , SnakeHead -> 3
 	private Snake snake;
 	private Cell food;
 	
 	public GameState(Game game) {
 		super(game);
-		Tile.TILEWIDTH=game.getWidth()/COLUMNS;
-		Tile.TILEHEIGHT=game.getHeight()/ROWS;
+		Tile.TILEWIDTH=20;
+		Tile.TILEHEIGHT=20;
 		grid=new int[ROWS][COLUMNS];
 		snake = new Snake(new Cell(ROWS/2,COLUMNS/2), 1,0);
 		food = generateFood();
@@ -24,7 +25,7 @@ public class GameState extends State {
 
 	@Override
 	public void tick() {
-		detectDirection();		// detect input from user and perform changes
+//		detectDirection();		// detect input from user and perform changes
 		if(snake.getHead().equals(food)) {
 			snake.tick(true);
 			food=generateFood();
@@ -40,7 +41,7 @@ public class GameState extends State {
 		
 		for(int y=0;y<ROWS;y++)
 			for(int x=0;x<COLUMNS;x++)
-				getTile(x,y).render(g, x*Tile.TILEWIDTH, y*Tile.TILEHEIGHT); 	// gives the location in pexels
+				getTile(x,y).render(g,startX + x*Tile.TILEWIDTH, startY + y*Tile.TILEHEIGHT); 	// gives the location in pexels
 		
 	}
 	
@@ -48,7 +49,7 @@ public class GameState extends State {
 		return Tile.tiles[grid[x][y]];
 	}
 	
-	private void detectDirection() {
+	public void detectDirection() {
 		if(game.getKeyBoard().isUp() && snake.getyDirection()==0) {
 			snake.setyDirection(-1);
 			snake.setxDirection(0);

@@ -11,6 +11,7 @@ public class Snake {
 		this.yDirection=yDirection;
 		for(int i=0;i<3;i++)
 			cells.add(new Cell(startCell.x-i, startCell.y));
+		
 	}
 	
 	public void tick(boolean eat) {

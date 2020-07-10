@@ -47,7 +47,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	public void run() {
 		init();
 
-		int fps = 15; // screen is updated 10 times per second
+		int fps = 10; // screen is updated 10 times per second
 		double timePerTick = (int) 1e9 / fps; // time in nanoseconds
 		double delta = 0;
 		long now, lastTime = System.nanoTime();
@@ -59,6 +59,11 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 				tick();
 				render();
 				delta -= 1;
+			}
+			// To make the keyboard responsive all the time
+			if(gameState instanceof GameState) {
+				keyBoard.tick();
+				((GameState) gameState).detectDirection();
 			}
 		}
 		stop();
@@ -127,6 +132,6 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	}
 
 	public static void main(String[] args) {
-		new Game("Hello", 600, 600);
+		new Game("Hello", 406, 500);
 	}
 }

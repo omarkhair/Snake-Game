@@ -15,10 +15,12 @@ abstract public class Tile {
 
 	// Class
 	protected Color color;
+	protected Color borderColor;
 	protected final int id;
 
-	public Tile(Color color, int id) {
+	public Tile(Color color,Color borderColor, int id) {
 		this.color = color;
+		this.borderColor=borderColor;
 		this.id = id;
 		tiles[id]=this;
 	}
@@ -30,5 +32,7 @@ abstract public class Tile {
 	public void render(Graphics g, int x, int y) {
 		g.setColor(color);
 		g.fillRect(x, y, TILEWIDTH, TILEHEIGHT);
+		g.setColor(borderColor);
+		g.drawRect(x, y, TILEWIDTH, TILEHEIGHT);
 	}
 }
