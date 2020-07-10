@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
+
 import input.KeyboardManager;
 import states.GameState;
 import states.State;
@@ -40,10 +42,9 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 		display.addKeyListener(keyBoard);
 		gameState=new GameState(this);
 		State.setState(gameState);
-
+		
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		init();
@@ -78,7 +79,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 			State.getState().tick();
 	}
 
-	private void render() {
+	public void render() {
 		// TODO Auto-generated method stub
 		bs = display.getCanvas().getBufferStrategy();
 		if (bs == null) {
@@ -115,11 +116,19 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Runtime.getRuntime().exit(0);
+		Runtime.getRuntime().exit(0);
 	}
 	public void onGameOver() {
-//		gameState.render(g);
-		running=false;
+//		running=false;
+		render();
+		int a = JOptionPane.showConfirmDialog(display, "Ops! You lost. Want to play again?", "EXIT Bar", JOptionPane.YES_NO_OPTION);
+		if (a == JOptionPane.YES_OPTION) {
+			display.setVisible(false);
+			run();
+		}
+		else
+			System.exit(0);
+			
 	}
 	
 	public KeyboardManager getKeyBoard() {
