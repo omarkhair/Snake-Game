@@ -49,7 +49,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	public void run() {
 		init();
 
-		int fps = 10; // screen is updated 10 times per second
+		int fps = Math.min(25, 8+((GameState)gameState).getScore()); // variable speed depending on the score
 		double timePerTick = (int) 1e9 / fps; // time in nanoseconds
 		double delta = 0;
 		long now, lastTime = System.nanoTime();

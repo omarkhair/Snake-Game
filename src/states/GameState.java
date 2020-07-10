@@ -27,7 +27,7 @@ public class GameState extends State {
 		Tile.TILEHEIGHT = 20;
 		score = 0;
 		grid = new int[ROWS][COLUMNS];
-		snake = new Snake(new Cell(ROWS / 2, COLUMNS / 2), 1, 0);
+		snake = new Snake(new Cell(ROWS / 4, COLUMNS / 4), 1, 0);
 		food = generateFood();
 	}
 
@@ -111,5 +111,8 @@ public class GameState extends State {
 
 	public int generateRandom() {
 		return (int) (Math.random() * ROWS);
+	}
+	public int getScore() {
+		return score;
 	}
 }
