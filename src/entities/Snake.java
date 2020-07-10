@@ -20,7 +20,12 @@ public class Snake {
 		if(!eat)
 			cells.removeLast();
 	}
-	
+	public boolean bitesItself() {
+		for(int i=1;i<cells.size();i++)
+			if(cells.get(i).equals(cells.get(0)))
+				return true;
+		return false;
+	}
 	
 	public void setxDirection(int xDirection) {
 		this.xDirection = xDirection;

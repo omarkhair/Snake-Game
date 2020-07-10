@@ -13,7 +13,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	private int width, height;
 	private String title;
 	private Display display;
-	private boolean running;
+	private volatile boolean running;
 	private Thread thread;
 
 	private BufferStrategy bs;
@@ -43,6 +43,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		init();
@@ -67,6 +68,7 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 			}
 		}
 		stop();
+		System.out.println("after stop");
 	}
 
 	private void tick() {
@@ -106,8 +108,6 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	}
 
 	private void stop() {
-		if (!running)
-			return;
 		running = false;
 		try {
 			thread.join();
@@ -115,8 +115,12 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		Runtime.getRuntime().exit(0);
 	}
-
+	public void onGameOver() {
+//		gameState.render(g);
+		running=false;
+	}
 	
 	public KeyboardManager getKeyBoard() {
 		return keyBoard;
@@ -132,6 +136,6 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 	}
 
 	public static void main(String[] args) {
-		new Game("Hello", 406, 500);
+		new Game("Hello", 407, 500);
 	}
 }

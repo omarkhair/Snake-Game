@@ -33,12 +33,19 @@ public class GameState extends State {
 		else {
 			snake.tick(false);
 		}
+		if(snake.getHead().x==-1 || snake.getHead().x==COLUMNS || snake.getHead().y ==-1 || snake.getHead().y==ROWS
+				|| snake.bitesItself()) {
+			// snake hit the boundaries, he loses
+			game.onGameOver();
+			return;
+		}
 		rebuildGrid();
+//		game.render();
+
 	}
 
 	@Override
 	public void render(Graphics g) {
-		
 		for(int y=0;y<ROWS;y++)
 			for(int x=0;x<COLUMNS;x++)
 				getTile(x,y).render(g,startX + x*Tile.TILEWIDTH, startY + y*Tile.TILEHEIGHT); 	// gives the location in pexels
@@ -76,10 +83,10 @@ public class GameState extends State {
 				grid[i][j]=0;
 		
 		grid[food.x][food.y]=1;
-		
 		for(Cell c: snake.getCells())
 			grid[c.x][c.y]=2;
 		grid[snake.getHead().x][snake.getHead().y]=3;
+		
 	}
 	
 	public Cell generateFood() {
