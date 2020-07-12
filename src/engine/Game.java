@@ -35,6 +35,9 @@ public class Game implements Runnable { // Runnable allows this class to be run 
 		this.title = title;
 		start();
 	}
+	public Game() {
+		this("Snake", 407, 500);
+	}
 
 	private void init() {
 		display = new Display(title, width, height);
